@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleWare');
 const router = express.Router();
 
 // Register Organization
-router.post('/registerOrganization', registerOrganization);
+router.post('/register', registerOrganization);
 
 // Get Organization Profile (Protected)
 router.get('/profile', authMiddleware, getOrganizationProfile);

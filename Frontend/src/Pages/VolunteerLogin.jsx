@@ -4,6 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import backgroundImage from '../assets/bg.jpg';
+import { API_ENDPOINTS, apiRequest } from '../config/api';
 
 const VolunteerLogin = () => {
   const [formData, setFormData] = useState({
@@ -58,20 +59,10 @@ const VolunteerLogin = () => {
     setIsLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5500/api/auth/volunteer-login', {
+      const data = await apiRequest(API_ENDPOINTS.VOLUNTEER_LOGIN, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErrors({ submit: data.msg || 'Login failed. Please try again.' });
-        return;
-      }
 
       // Success animation
       setShowSuccess(true);
@@ -81,7 +72,7 @@ const VolunteerLogin = () => {
 
     } catch (error) {
       console.error('Error during login:', error);
-      setErrors({ submit: 'Network error. Please check your connection and try again.' });
+      setErrors({ submit: error.message || 'Network error. Please check your connection and try again.' });
     } finally {
       setIsLoading(false);
     }

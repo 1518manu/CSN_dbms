@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/profile', authMiddleware, (req, res) => {
   res.json({ msg: 'Welcome to the user profile', user: req.user });
 });
-// Register Volunteer
-router.post('/registergeneraluser', registerUser);
+// Register User
+router.post('/register', registerUser);
 
 module.exports = router;
