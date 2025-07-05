@@ -12,6 +12,11 @@ export const API_ENDPOINTS = {
   ADMIN_LOGIN: `${API_BASE_URL}/api/auth/admin-login`,
   ADMIN_REGISTER: `${API_BASE_URL}/api/admin/register`,
   
+  // Profile endpoints
+  VOLUNTEER_PROFILE: `${API_BASE_URL}/api/Volunteer/profile`,
+  USER_PROFILE: `${API_BASE_URL}/api/generaluser/profile`,
+  ORGANIZATION_PROFILE: `${API_BASE_URL}/api/organization/profile`,
+  
   // Other endpoints can be added here
 };
 
@@ -20,21 +25,28 @@ export const API_CONFIG = {
   headers: {
     'Content-Type': 'application/json',
   },
-  // Add any common configuration here
 };
 
 // API helper functions
 export const apiRequest = async (url, options = {}) => {
   try {
+    const token = localStorage.getItem('token');
+    const headers = {
+      ...API_CONFIG.headers,
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...options.headers,
+    };
+
     const response = await fetch(url, {
       ...API_CONFIG,
       ...options,
+      headers,
     });
     
     const data = await response.json();
     
     if (!response.ok) {
-      throw new Error(data.msg || `HTTP error! status: ${response.status}`);
+      throw new Error(data.msg || data.message || `HTTP error! status: ${response.status}`);
     }
     
     return data;
@@ -42,4 +54,21 @@ export const apiRequest = async (url, options = {}) => {
     console.error('API request failed:', error);
     throw error;
   }
+};
+
+// Auth utilities
+export const setAuthToken = (token) => {
+  if (token) {
+    localStorage.setItem('token', token);
+  } else {
+    localStorage.removeItem('token');
+  }
+};
+
+export const getAuthToken = () => {
+  return localStorage.getItem('token');
+};
+
+export const removeAuthToken = () => {
+  localStorage.removeItem('token');
 };
