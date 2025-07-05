@@ -14,8 +14,7 @@ const app = express();
 // Middleware
 //app.use(cors());
 app.use(cors({
-    origin: process.env.REACT_APP_API_URL || 'http://localhost:3000', // Set your frontend URL in .env
-    credentials: true
+    origin: process.env.REACT_APP_API_URL|| '*', // Set your frontend URL in .env
   }));
   
 app.use(bodyParser.json());

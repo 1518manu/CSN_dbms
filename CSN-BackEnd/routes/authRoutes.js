@@ -5,15 +5,14 @@ const router = express.Router();
 // Register Route
 router.post('/registerVolunteer', registerVolunteer);
 
-// Login Routes
+// Login Route
 router.post('/loginVolunteer', loginVolunteer);
-router.post('/volunteer-login', loginVolunteer); // Additional endpoint for frontend compatibility
+
 router.post('/loginOrganization', loginOrganization);
-router.post('/organization-login', loginOrganization); // Additional endpoint for frontend compatibility
+
 router.post('/loginUser', loginUser);
-router.post('/user-login', loginUser); // Additional endpoint for frontend compatibility
-router.post('/loginAdmin', loginAdmin);
-router.post('/admin-login', loginAdmin); // Additional endpoint for frontend compatibility
+
+router.post('/login', loginAdmin);
 
 module.exports = router;
 //these are for defining the post routes
